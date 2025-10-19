@@ -4,11 +4,17 @@ server:
 spring:
   data:
     mongodb:
-      host: localhost
+      host: mongo
       port: 27017
       database: bankAccount
   kafka:
     producer:
-      bootstrap-servers: localhost:29092
+      bootstrap-servers: kafka:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+  
+  management:
+    endpoints:
+      web:
+        exposure:
+          include: health,info

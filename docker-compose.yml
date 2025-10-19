@@ -69,10 +69,12 @@ services:
       - mongo
       - mysql
     ports:
-      - "8080:8080"
+      - "8080:5000"
     environment:
       SPRING_PROFILES_ACTIVE: docker
     restart: unless-stopped
+    volumes:
+      - C:/Users/juans/.m2:/root/.m2
 
   account-query:
     build:
@@ -87,6 +89,8 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: docker
     restart: unless-stopped
+    volumes:
+      - C:/Users/juans/.m2:/root/.m2
 
 volumes:
   mongo_data:
