@@ -10,4 +10,5 @@ public interface AccountRepository extends CrudRepository<BankAccount, String> {
     Optional<BankAccount> findByAccountHolder(String accountHolder);
     List<BaseEntity> findByBalanceGreaterThan(double balance);
     List<BaseEntity> findByBalanceLessThan(double balance);
+    List<BaseEntity> findByBalanceBetween(double min, double max);
 }

@@ -47,9 +47,13 @@ public class AccountQueryHandler implements QueryHandler {
 
     @Override
     public List<BaseEntity> handle(FindAccountWithBalanceQuery query) {
-        List<BaseEntity> bankAccountsList = query.getEqualityType() == EqualityType.GREATER_THAN
-                ? accountRepository.findByBalanceGreaterThan(query.getBalance())
-                : accountRepository.findByBalanceLessThan(query.getBalance());
-        return bankAccountsList;
+        if (query.getEqualityType() == EqualityType.EQUAL) {
+            double tolerance = 0.01;
+            return accountRepository.findByBalanceBetween(query.getBalance() - tolerance, query.getBalance() + tolerance);
+        } else if (query.getEqualityType() == EqualityType.GREATER_THAN) {
+            return accountRepository.findByBalanceGreaterThan(query.getBalance());
+        } else {
+            return accountRepository.findByBalanceLessThan(query.getBalance());
+        }
     }
 }
