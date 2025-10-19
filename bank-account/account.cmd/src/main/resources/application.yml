@@ -1,20 +1,28 @@
-server:
-  port: 5000
-
 spring:
+  kafka:
+    topic: account-events
+    producer:
+      bootstrap-servers: kafka:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: account-group
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: '*'
   data:
     mongodb:
       host: mongo
       port: 27017
       database: bankAccount
-  kafka:
-    producer:
-      bootstrap-servers: kafka:9092
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-  
   management:
     endpoints:
       web:
         exposure:
           include: health,info
+
+server:
+  port: 5000
